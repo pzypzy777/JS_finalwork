@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2048GAME</title>
+  <link href="css/main.css" rel="stylesheet">
+
+</head>
+
+<body onkeydown="keyboardEvents()">
+  <div id="theMark">
+    <div>当前分数为 <span id="mark"></span> 分</div>
+    <button id="newgame" onclick="main()"><span>NEW GAME</span></button>
+  </div>
+  <!-- cellspacing属性可设置或返回在表格中的单元格之间的空白量 -->
+  <table id="maintable" cellspacing="10"></table>
+
+  <div id="gameover"></div>
+
+</body>
+<script src="js/main2048.js"></script>
+
+</html>
