@@ -2,25 +2,121 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2048GAME</title>
-  <link href="css/main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style type="text/css">
+        html,body{height:90%;}
 
+        .login{
+            width: 30% ;
+            height: 50%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 0 10px #fff; 
+        }
+        input{
+            background-color: transparent;
+            border: none;
+            border-bottom: white 1px solid;
+            width: 50%;
+            font-size: 20px;
+            color: #fff;
+            margin: 10px 0;
+            padding-left: 10px;
+
+           
+        }
+        .but{
+            width: 120px;
+            background-color: transparent;
+            border: #fff 2px solid;
+            height: 40px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size:16px;
+            
+            color: #fff;
+            margin: 20px 20px 0 20px;
+            text-align: center;
+           
+        }
+        form{
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }  
+        form div{
+            text-align: center;
+            width: 100%;
+        }     
+    </style>
+    <script src="./js/http.js"></script>
+    <script src="./js-cookie.js"></script>
+    <script>
+        function sign() {
+            window.location.href = './sign.html';
+        }
+
+
+
+        function infoConfirmed() {
+            var xmlhttp = new XMLHttpRequest();
+            var name = document.getElementById('name').value;
+            var pass = document.getElementById('pass').value;
+            var obj = {
+                name: name,
+                pass: pass
+            };
+            xmlhttp.open("POST", myurl+"/user", true);
+            xmlhttp.setRequestHeader("Content-Type"
+                , "application/json");
+            xmlhttp.send(JSON.stringify(obj));
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    var json = JSON.parse(xmlhttp.responseText);
+                    if (json.status == 400)
+                        alert(json.data);
+                    else {
+                        alert("登录成功！");
+                        Cookies.set('name', json.data.id);
+                        Cookies.set('username', json.data.name);
+                        window.location.href = './2048/index.html';
+                    }
+                }
+            }
+
+        }
+
+    </script>
 </head>
 
-<body onkeydown="keyboardEvents()">
-  <div id="theMark">
-    <div>当前分数为 <span id="mark"></span> 分</div>
-    <button id="newgame" onclick="main()"><span>NEW GAME</span></button>
-  </div>
-  <!-- cellspacing属性可设置或返回在表格中的单元格之间的空白量 -->
-  <table id="maintable" cellspacing="10"></table>
+<body style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+    <div class="login">
+        <h1 style="margin-top:0;">登录</h1>
+        <form>
+            <div>  账号 <input type="text" id="name" /> </div>
+            <div>  密码 <input type="password" id="pass" /> </div>
+           
+         
+        </form>
 
-  <div id="gameover"></div>
+          
+        <div>
+            <input type="submit" value="提交" onclick="infoConfirmed()" class="but"/>
+            <input type="submit" value="注册" onclick="sign()" class="but"/>
+        </div>
+       
+    </div>
 
 </body>
-<script src="js/main2048.js"></script>
 
 </html>

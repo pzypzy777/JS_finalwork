@@ -1,0 +1,158 @@
+.but {
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    border: #fff 2px solid;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-weight: 600;
+    margin: 0 10px;
+
+    color: #fff;
+
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0 30px;
+  }
+
+  .header {
+    width: 100%;
+    border-bottom: 1px white solid;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+
+    box-shadow: 0, 0, 0, 0 0 10px #fff;
+  }
+
+  .header div {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+  }
+
+  .left {
+    width: 66%;
+  }
+
+  .right {
+    border-left: 2px white solid;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding-bottom: 50px;
+  }
+
+  .right h1 {
+    margin: 30px;
+  }
+
+  .select-item {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  #rc {
+    text-align: center;
+    border-bottom: #fff 2px solid;
+  }
+
+  #rc thead {
+    font-size: 20px;
+    border-bottom: #fff 1px solid;
+  }
+
+  #rc td {
+    padding: 10px;
+  }
+
+  #select {
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    border-bottom: #fff 1px solid;
+    color: #fff;
+  }
+
+  #select > option {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  #rank {
+    text-align: center;
+  }
+
+  #rank thead {
+    font-size: 20px;
+    border-bottom: #fff 1px solid;
+  }
+
+  #rank td {
+    padding: 10px;
+  }
+
+  .pp {
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .pp > div {
+    margin: 5px;
+  }
+
+  .card {
+    margin: 30px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card div {
+    margin-top: 10px;
+  }
+
+  .card > img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .name {
+    font-size: 24px;
+  }
+
+  #go {
+    display: flex;
+    flex-flow: row;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .butunder {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+  }

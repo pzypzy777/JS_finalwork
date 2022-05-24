@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style></style>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>排行榜</title>
+    <script src="js/http.js"></script>
+    <link rel="stylesheet" href="./myexpress/public/stylesheets/rank.css">
+    <script></script>
+  </head>
+
+  <body
+    style="
+      background-color: rgba(0, 0, 0, 0.87);
+      color: white;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div class="header">
+      <div>
+        <h1>Hello</h1>
+        <h3 id="user"></h3>
+      </div>
+      <div>
+        <div onclick="loginout()" class="but">退出登录</div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="left">
+        <div id="go"></div>
+      </div>
+      <div class="right">
+        <h1>排行榜</h1>
+        <div class="select-item">
+          2048小游戏
+        </div>
+
+        <table id="rank">
+          <thead>
+            <td>用户</td>
+            <td>分数</td>
+            <td>时间</td>
+          </thead>
+        </table>
+
+        <h1>我的游戏记录</h1>
+        <div>
+          <table id="rc">
+            <thead>
+              <td>时间</td>
+              <td>得分</td>
+            </thead>
+          </table>
+          <div class="pp">
+            <div onclick="pre()">上一页</div>
+            <div id="page">第0页/共0页</div>
+            <div onclick="next()">下一页</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="js/jquery-3.5.0.min.js"></script>
+  <script>
+    var index = 0;
+    var page = 6;
+    var allpage = 0;
+
+    function loginout() {
+      document.cookie = "";
+      window.location.href = "./index.html";
+    }
+
+    function pre() {
+      if (index != 0) {
+        index--;
+        getRecord();
+      }
+    }
+
+    function next() {
+      if (index != allpage - 1) {
+        index++;
+        getRecord();
+      }
+    }
+
+    function getRank() {
+      let xmlhttp = new XMLHttpRequest();
+      let name = parseInt(getCookie("name"));
+      xmlhttp.open("GET", myurl + "/record/"+ name +"/rank", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.send();
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          let rank = document.getElementById("rank");
+          let json = JSON.parse(xmlhttp.responseText);
+          let child = rank.childNodes;
+          for (let i = child.length - 1; i >= 0; i--) {
+            rank.removeChild(child[i]);
+          }
+
+          if (json.status == 200) {
+            let thead = document.createElement("thead");
+
+            let td1 = document.createElement("td");
+            td1.innerHTML = "用户";
+            let td2 = document.createElement("td");
+            td2.innerHTML = "得分";
+
+            thead.appendChild(td1);
+            thead.appendChild(td2);
+            rank.appendChild(thead);
+
+            for (let i = 0; i < json.data.length; i++) {
+              let tr = document.createElement("tr");
+
+              let td1 = document.createElement("td");
+              td1.innerHTML = json.data[i].name;
+              let td2 = document.createElement("td");
+              td2.innerHTML = json.data[i].max;
+              tr.appendChild(td1);
+              tr.appendChild(td2);
+              rank.appendChild(tr);
+            }
+          } else {
+          }
+        }
+      };
+    }
+
+    function getCookie(name) {
+      var arr = document.cookie.split("; ");
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var item = arr[i].split("=");
+        if (item[0] == name) {
+          return item[1];
+        }
+      }
+      return "";
+    }
+
+    window.onload = function () {
+      getName();
+      getRecord();
+      getRank();
+    };
+
+    function getName() {
+      let xmlhttp = new XMLHttpRequest();
+      let name = parseInt(getCookie("name"));
+      xmlhttp.open("GET", myurl + "/user/" + name, true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.send();
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          let json = JSON.parse(xmlhttp.responseText);
+
+          if (json.status == 200) {
+            let us = document.getElementById("user");
+
+            us.innerHTML = "欢迎你,用户:" + json.data[0].name;
+          } else {
+          }
+        }
+      };
+    }
+
+    function getRecord() {
+      let xmlhttp = new XMLHttpRequest();
+      let name = parseInt(getCookie("name"));
+      xmlhttp.open(
+        "GET",
+        myurl + "/record/" + name + "?page=" + index + "&size=" + page,
+        true
+      );
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+
+      xmlhttp.send();
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          let rc = document.getElementById("rc");
+          let pg = document.getElementById("page");
+          let child = rc.childNodes;
+          for (let i = child.length - 1; i >= 0; i--) {
+            rc.removeChild(child[i]);
+          }
+
+          let json = JSON.parse(xmlhttp.responseText);
+
+          if (json.status == 200) {
+            let thead = document.createElement("thead");
+
+            let td1 = document.createElement("td");
+            td1.innerHTML = "时间";
+            let td2 = document.createElement("td");
+            td2.innerHTML = "得分";
+
+            thead.appendChild(td1);
+            thead.appendChild(td2);
+            rc.appendChild(thead);
+            allpage = 24 / parseInt(page);
+            pg.innerHTML = "第" + (index + 1) + "页/共" + allpage + "页";
+
+            for (let i = 0; i < json.data.length; i++) {
+              let tr = document.createElement("tr");
+
+              let td1 = document.createElement("td");
+              td1.innerHTML = json.data[i].time;
+              let td2 = document.createElement("td");
+              td2.innerHTML = json.data[i].score;
+
+              tr.appendChild(td1);
+              tr.appendChild(td2);
+
+              rc.appendChild(tr);
+            }
+          } else {
+          }
+        }
+      };
+    }
+
+  </script>
+</html>
