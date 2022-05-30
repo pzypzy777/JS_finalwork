@@ -14,9 +14,9 @@
             flex-flow: column;
             justify-content: center;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
             border-radius: 30px;
-            box-shadow: 0 0 10px #fff; 
+            box-shadow: 0 0 10px rgb(240, 88, 139); 
         }
         input{
             background-color: transparent;
@@ -99,9 +99,9 @@
     </script>
 </head>
 
-<body style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+<body style="background-color: rgba(255, 255, 255, 0.87);color: rgba(236, 28, 132, 0.774);display: flex;flex-flow: column;justify-content: center;align-items: center;">
     <div class="login">
-        <h1 style="margin-top:0;">登录</h1>
+        <h1 style="margin-top:10px; color: rgba(236, 28, 132, 0.774);">登录</h1>
         <form>
             <div>  账号 <input type="text" id="name" /> </div>
             <div>  密码 <input type="password" id="pass" /> </div>
@@ -111,7 +111,7 @@
 
           
         <div>
-            <input type="submit" value="提交" onclick="infoConfirmed()" class="but"/>
+            <input type="submit" value="登录" onclick="infoConfirmed()" class="but"/>
             <input type="submit" value="注册" onclick="sign()" class="but"/>
         </div>
        

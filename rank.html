@@ -12,18 +12,25 @@
 
   <body
     style="
-      background-color: rgba(0, 0, 0, 0.87);
-      color: white;
+      background-color: #fff;
+      color: rgb(245, 117, 32);
       display: flex;
       flex-flow: column;
       justify-content: center;
       align-items: center;
+      width: 80%;
+      height: 80%;
+      margin: 0 auto;
+      border-radius: 30px;
+      margin-top: 50px;
+      border-radius: 30px;
+      border: 1px solid white;
     "
   >
-    <div class="header">
+  <div class="container">
+ <div class="header">
       <div>
-        <h1>Hello</h1>
-        <h3 id="user"></h3>
+        <h3 id="user" style="text-align: center; margin-left: 40px;"></h3>
       </div>
       <div>
         <div onclick="loginout()" class="but">退出登录</div>
@@ -31,9 +38,6 @@
     </div>
     <div class="main">
       <div class="left">
-        <div id="go"></div>
-      </div>
-      <div class="right">
         <h1>排行榜</h1>
         <div class="select-item">
           2048小游戏
@@ -47,6 +51,9 @@
           </thead>
         </table>
 
+      </div>
+      <div class="right">
+       
         <h1>我的游戏记录</h1>
         <div>
           <table id="rc">
@@ -63,6 +70,8 @@
         </div>
       </div>
     </div>
+  </div>
+   
   </body>
   <script src="js/jquery-3.5.0.min.js"></script>
   <script>
@@ -165,7 +174,7 @@
           if (json.status == 200) {
             let us = document.getElementById("user");
 
-            us.innerHTML = "欢迎你,用户:" + json.data[0].name;
+            us.innerHTML = json.data[0].name+" 玩家 , 你好 !";
           } else {
           }
         }
@@ -192,7 +201,6 @@
           for (let i = child.length - 1; i >= 0; i--) {
             rc.removeChild(child[i]);
           }
-
           let json = JSON.parse(xmlhttp.responseText);
 
           if (json.status == 200) {
@@ -213,7 +221,7 @@
               let tr = document.createElement("tr");
 
               let td1 = document.createElement("td");
-              td1.innerHTML = json.data[i].time;
+              td1.innerHTML = rTime(json.data[i].time);
               let td2 = document.createElement("td");
               td2.innerHTML = json.data[i].score;
 
@@ -227,6 +235,11 @@
         }
       };
     }
+    function rTime(date) {
+    var json_date = new Date(date).toJSON();
+    return new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') ;
 
+    
+}
   </script>
 </html>
