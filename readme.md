@@ -83,21 +83,35 @@
 
 ##### **改进 2048游戏界面：**
 
+![image-20220531030620157](readme.assets/image-20220531030620157.png)
+
 **增加关卡选择功能。**
+
+![image-20220531030641269](readme.assets/image-20220531030641269.png)
 
 **增加用户登录注册、游戏记录、排行榜**
 
-
+![image-20220531030655545](readme.assets/image-20220531030655545.png)
 
 ### 2.用户登录&&注册
 
 #### （1）实现说明	
 
+<img src="readme.assets/image-20220531031047917.png" alt="image-20220531031047917" style="zoom:67%;" />
+
+
+
+
+
+<img src="readme.assets/image-20220531031029509.png" alt="image-20220531031029509" style="zoom: 67%;" />
+
+
+
 
 
 ### 3.游戏界面
 
-
+![image-20220531031016117](readme.assets/image-20220531031016117.png)
 
 ### 4.排行榜
 
@@ -646,6 +660,110 @@ module.exports = {
 ## 2.Mysql查询方式(代码见上)
 
 ## 3.5*5游戏开发(可以选择)
+
+```
+function newgame(){
+	//游戏入口 根据输入数字初始化table,前端显示
+}
+function tdRandom(){
+	//在table中随机一个<td>生成2或4
+}
+function tdcolor(){
+	//遍历<td> 根据数值更改颜色深浅
+}
+function keyboardEvents(){
+	//监听键盘事件 根据wsad或上下左右方向键移动<td>
+	 ...
+	 tdcolor();//移动完<td>更改颜色
+}
+function Left(){
+	//左移<td>方法
+	 for (var i = mapy; i <= mapy + (mapx - 1) * mapy; i += mapy) {//列遍历
+        var tempmap = [];//存储原<td>的值
+        var tempflag = [];//存储<td>是否为空
+        var z = 0;
+        for (var j = i; j >= i - mapy + 1; j--) {//每行从右向左遍历
+            var thetd = document.getElementById(j);
+            if (thetd.innerHTML == "" ) {
+                tempmap[z] = 0;
+            } else {
+                tempmap[z] = parseInt(thetd.innerHTML);
+            }
+            tempflag[z] = true;
+            z++;
+        }
+        tempmap = changetd(tempmap, tempflag, tempmap.length, 0);//见下
+        z = 0;
+        for (var j = i; j >= i - mapy + 1; j--) {//把移动好的值重新渲染
+            var thetd = document.getElementById(j);
+            if (tempmap[z] == 0) {
+                thetd.innerHTML = "";
+            } else {
+                thetd.innerHTML = tempmap[z];
+            }
+            z++;
+        }
+    }
+}
+function changetd(tempmap, tempflag, k, u){
+	//一行或一列进行变换
+	for (var i = k - 1; i > u; i--) {
+        if (tempmap[i - 1] != 0 && tempmap[i] == 0) {//若前一个元素为0且当前元素不为0就前移
+            tempmap[i] = tempmap[i - 1];
+            tempmap[i - 1] = 0;
+            if (tempflag[i - 1] == false) {//<td>有值flag就为false,防止在此<td>上随机生成数值
+                tempflag[i - 1] = true;
+                tempflag[i] = false;
+            }
+            flag_r = true;// tempmap[i - 1] = 0;表示table中有空缺 可调用tdRandom()新生成<td>
+        } else if (tempmap[i - 1] != 0 && tempmap[i] == tempmap[i - 1] && tempflag[i] == true && tempflag[i - 1] == true) {//有相同的值就合并	
+            tempmap[i] *= 2;
+            tempmap[i - 1] = 0;
+            tempflag[i] = false;
+            flag_r = true;
+            mark =mark+ tempmap[i];//记录得分数
+        }
+        tempmap = changetd(tempmap, tempflag, k, i);//嵌套
+    }
+    return tempmap;
+}
+function Down(){}
+function Right(){}
+function Up(){} //如上同理
+
+function isover(){
+	//判断游戏是否结束
+	var f = 0;
+    for (var i = 1; i <= mapx * mapy; i++) {//遍历<td>
+        var td = document.getElementById(i);
+        if (td.innerHTML >= youwin) {//赢得游戏条件
+            document.getElementById("gameover").innerHTML = "恭喜你达到了 " + td.innerHTML;
+            document.getElementById("gameover").style.display = "block";
+            youwin = parseInt(td.innerHTML);
+        }
+        if (td.innerHTML == "") {
+            //空值跳过
+        } else if (i <= (mapx - 1) * mapy && td.innerHTML == document.getElementById(i + mapy).innerHTML) {
+            //判断该格子下方的数是否与之相同
+        } else if (i % mapy != 0 && td.innerHTML == document.getElementById(i + 1).innerHTML) {
+            //判断该格子右边的数是否与之相同
+        } else {
+            f++;//计算无法在合并的<td>数量
+        }
+    }
+    if (f == mapx * mapy) {//如果无法合并的<td>数量与总数相等 游戏结束 前端渲染信息
+        document.getElementById("gameover").innerHTML += "game over";
+        document.getElementById("gameover").style.display = "block";
+        document.getElementById("score").style.display = "block";
+        document.getElementById("score").innerHTML="当前分数为" + mark+"分";
+        overflag = false;
+        gameover();//发送请求记录此次分数
+		updatemax();//发送请求跟新历史最高分
+    }
+}
+```
+
+
 
 ## 4.RestApi(代码见上)
 
