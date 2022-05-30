@@ -2,110 +2,121 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2048GAME</title>
-  <link href="css/main.css" rel="stylesheet">
-  <script src="../js/http.js"></script>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style type="text/css">
+        html,body{height:90%;}
+
+        .login{
+            width: 30% ;
+            height: 50%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgb(240, 88, 139); 
+        }
+        input{
+            background-color: transparent;
+            border: none;
+            border-bottom: white 1px solid;
+            width: 50%;
+            font-size: 20px;
+            color: #fff;
+            margin: 10px 0;
+            padding-left: 10px;
+
+           
+        }
+        .but{
+            width: 120px;
+            background-color: transparent;
+            border: #fff 2px solid;
+            height: 40px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size:16px;
+            
+            color: #fff;
+            margin: 20px 20px 0 20px;
+            text-align: center;
+           
+        }
+        form{
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }  
+        form div{
+            text-align: center;
+            width: 100%;
+        }     
+    </style>
+    <script src="./js/http.js"></script>
+    <script src="./js-cookie.js"></script>
+    <script>
+        function sign() {
+            window.location.href = './sign.html';
+        }
+
+
+
+        function infoConfirmed() {
+            var xmlhttp = new XMLHttpRequest();
+            var name = document.getElementById('name').value;
+            var pass = document.getElementById('pass').value;
+            var obj = {
+                name: name,
+                pass: pass
+            };
+            xmlhttp.open("POST", myurl+"/user", true);
+            xmlhttp.setRequestHeader("Content-Type"
+                , "application/json");
+            xmlhttp.send(JSON.stringify(obj));
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    var json = JSON.parse(xmlhttp.responseText);
+                    if (json.status == 400)
+                        alert(json.data);
+                    else {
+                        alert("登录成功！");
+                        Cookies.set('name', json.data.id);
+                        Cookies.set('username', json.data.name);
+                        window.location.href = './2048/index.html';
+                    }
+                }
+            }
+
+        }
+
+    </script>
 </head>
 
-<body onkeydown="keyboardEvents()">
-  <div id="all">
-    <div id="theMark">
-      <button id="newgame" onclick="newgame()">
-        <span>NEW GAME</span>
-        
-      </button>
-      <button id="torank" onclick="torank()"><span>RANK</span></button>
-      <div id="diy">
-        <span>自定义行数</span><input id="inputmap" type="text" >
-      </div>
-      
-    </div>
-    <table id="maintable" cellspacing="20"></table>
-    <div id="score">
-    </div>
-    <div id="gameover"></div>
-  </div>
-   
+<body style="background-color: rgba(255, 255, 255, 0.87);color: rgba(236, 28, 132, 0.774);display: flex;flex-flow: column;justify-content: center;align-items: center;">
+    <div class="login">
+        <h1 style="margin-top:10px; color: rgba(236, 28, 132, 0.774);">登录</h1>
+        <form>
+            <div>  账号 <input type="text" id="name" /> </div>
+            <div>  密码 <input type="password" id="pass" /> </div>
+           
+         
+        </form>
 
+          
+        <div>
+            <input type="submit" value="登录" onclick="infoConfirmed()" class="but"/>
+            <input type="submit" value="注册" onclick="sign()" class="but"/>
+        </div>
+       
+    </div>
 
 </body>
-<script src="js/main2048.js"></script>
-<style lang="less" scoped>
-  * {
-      /* 清除预设margin和padding */
-      margin: 0;
-      padding: 0;
-      /* 把borders和padding全都包含在定义的宽高里面 */
-      box-sizing: border-box;
-      /* 设置字体（cursive为备选字体） */
-      font-family: "MV Boli", cursive;
-  }
-  body {
-      background: rgb(250, 250, 250);
-  }
-  h2 {
-      /* flex布局 */
-      display: flex;
-      /* 初始文字透明 */
-      color: transparent;
-      /* 文字水平垂直居中显示 */
-      justify-content: center;
-      align-items: center;
-      /* h2高度 */
-      height: 20px;
-      /* 字号 */
-      font-size: 25px;
-  }
-  h2 span:nth-child(6) {
-      /* 单词间隙 */
-      margin-left: 5px;
-  }
-  h2 span {
-      animation: LetterColor 3s linear infinite;
-      /* 计算每个字的动画起始时间 */
-      animation-delay: calc(0.1s * var(--o));
-  }
-  @keyframes LetterColor {
-      0% {
-          color: #fff;
-          /* 利用模糊距离不同的阴影实现霓虹灯光晕效果 */
-          text-shadow: 
-          0 0 10px #00b3ff,
-          0 0 20px #00b3ff,
-          0 0 40px #00b3ff,
-          0 0 80px #00b3ff,
-          0 0 120px #00b3ff,
-          0 0 200px #00b3ff,
-          0 0 300px #00b3ff,
-          0 0 400px #00b3ff;
-          /* 设置高斯模糊与色调，实现模糊效果和颜色变换 */
-          filter: blur(1px) hue-rotate(0deg);
-      }
-      30%,
-      70% {
-          color: #fff;
-          /* 减少光晕大小 */
-          text-shadow: 
-          0 0 10px #00ffd5,
-          0 0 20px #4c00ff,
-          0 0 40px #40a1c7,
-          0 0 80px #fc43d4,
-          0 0 120px #00b3ff,
-          0 0 200px #00b3ff;
-          /* 色调变换360度 */
-          filter: blur(2px) hue-rotate(360deg);
-      }
-      100% {
-          /* 动画结束字变透明 */
-          color: transparent;
-          /* 动画结束消除阴影 */
-          text-shadow: none;
-          /* 动画结束色调重置 */
-          filter: blur(1px) hue-rotate(0deg);
-      }
-  }
-  </style>
+
 </html>
