@@ -15,12 +15,6 @@ router.post("", function (req, res) {
       data: "保存记录成功",
     });
   });
-	// updateMax(req.body.name, function (success) {
-  //   res.json({
-  //     status: "200",
-  //     data: "更新记录成功",
-  //   });
-  // });
 });
 
 router.post("/update", function (req, res) {

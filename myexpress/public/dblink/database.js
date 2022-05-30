@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var pool = mysql.createConnection({ //创建mysql实例
+var pool = mysql.createConnection({
     host: '121.199.49.79',
     port: '3306',
     user: 'root',
