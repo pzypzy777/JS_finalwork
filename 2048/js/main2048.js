@@ -6,13 +6,6 @@ function torank() {
     window.location.href = '../../rank.html';
 }
 function newgame() {
-    // var cnt=document.getElementById("inputmap").value;
-    // if(cnt<=4){
-    //     mapx = 4, mapy = 4;
-    // }else{
-    //     mapx = cnt, mapy = cnt;
-    // }
-    // mapx = 5, mapy = 5, mapt = mapx * mapy; //设定表框大小，一般为4*4
     var cnt=document.getElementById("inputmap").value;
     if(cnt<=4){
         mapx = 4, mapy = 4, mapt = mapx * mapy;
@@ -37,7 +30,8 @@ function newgame() {
     tdRandom();
     tdRandom();
     tdcolor();
-    document.getElementById("score").style.display = "none";
+    document.getElementById("score").style.display = "block";
+    document.getElementById("score").innerHTML = "当前分数为" + mark+"分";
     document.getElementById("gameover").style.display = "none";
     document.getElementById("gameover").innerHTML = "";
     youwin = 2048;
@@ -190,7 +184,7 @@ function keyboardEvents() {
             flag_r = false;
         }
     }
-
+    document.getElementById("score").innerHTML = "当前分数为" + mark+"分";
     tdcolor();
     if (overflag)
         isover();
