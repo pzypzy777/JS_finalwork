@@ -1,138 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>注册</title>
     <script src="./js/http.js"></script>
     <script>
-        function backtoindex() {
-            window.location.href = './index.html';
+      function backtoindex() {
+        window.location.href = "./index.html";
+      }
+
+      function infoConfirmed() {
+        var xmlhttp = new XMLHttpRequest();
+        var name = document.getElementById("name").value;
+        var pass = document.getElementById("pass").value;
+        var pass2 = document.getElementById("pass2").value;
+        if (name == "") {
+          alert("账号为空");
+          return false;
+        } else if (pass == "") {
+          alert("密码为空");
+          return false;
+        } else if (pass2 != pass) {
+          alert("两次密码不一致");
+          return false;
         }
 
+        var obj = {
+          name: name,
+          pass: pass,
+        };
+        xmlhttp.open("POST", myurl + "/user/sign/new", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify(obj)); // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
 
-
-        function infoConfirmed() {
-            var xmlhttp = new XMLHttpRequest();
-            var name = document.getElementById('name').value;
-            var pass = document.getElementById('pass').value;
-            var pass2 = document.getElementById('pass2').value;
-            if (name == '') {
-                alert("账号为空");
-                return false;
-            } else if (pass == '') {
-                alert("密码为空");
-                return false;
-            } else if (pass2 != pass) {
-                alert("两次密码不一致");
-                return false;
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var json = JSON.parse(xmlhttp.responseText);
+            if (json.status == 400) alert(json.data);
+            else if (json.status == 200) {
+              alert("注册成功！");
+              window.location.href = "./index.html";
             }
-
-            var obj = {
-                name: name,
-                pass: pass,
-            };
-            xmlhttp.open("POST", myurl+"/user/sign/new", true);
-            xmlhttp.setRequestHeader("Content-Type"
-                , "application/json");
-            xmlhttp.send(JSON.stringify(obj));  // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
-
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
-                    var json = JSON.parse(xmlhttp.responseText);
-                    if (json.status == 400)
-                        alert(json.data);
-                    else if(json.status == 200){
-                        alert("注册成功！");
-                        window.location.href = './index.html';
-                    }
-
-
-                }
-            }
-
-        }
+          }
+        };
+      }
     </script>
-</head>
+  </head>
 
-<body
-    style="background-color: rgba(255, 255, 255, 0.87);color: rgb(243, 75, 229);display: flex;flex-flow: column;justify-content: center;align-items: center;">
-    <div class="login" style="background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 14%, #e6dee9 100%);">
-        <h1>注册</h1>
-        <form>
-            <div> 账号<input type="text" id="name" /> </div>
-            <div> 密码<input type="password" id="pass" /> </div>
-            <div> 确认密码<input type="password" id="pass2" /> </div>
-        </form>
+  <body
+    style="
+      background-color: rgba(255, 255, 255, 0.87);
+      color: rgb(243, 75, 229);
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div
+      class="login"
+      style="
+        background-image: linear-gradient(
+          to top,
+          #fdcbf1 0%,
+          #fdcbf1 14%,
+          #e6dee9 100%
+        );
+      "
+    >
+      <h1>注册</h1>
+      <form>
+        <div>账号<input type="text" id="name" /></div>
+        <div>密码<input type="password" id="pass" /></div>
+        <div>确认密码<input type="password" id="pass2" /></div>
+      </form>
 
-        <div style="margin-top: 20px;">
-            <input type="submit" value="注册" onclick="infoConfirmed()" class="but"/>
-            <input type="submit" value="返回" onclick="backtoindex()"  class="but"/>
-        </div>
-
+      <div style="margin-top: 20px">
+        <input
+          type="submit"
+          value="注册"
+          onclick="infoConfirmed()"
+          class="but"
+        />
+        <input type="submit" value="返回" onclick="backtoindex()" class="but" />
+      </div>
     </div>
-
-</body>
-<style type="text/css">
+  </body>
+  <style type="text/css">
     html,
     body {
-        height: 90%;
+      height: 90%;
     }
 
     .login {
-        width: 30%;
-        height: 70%;
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 30px;
-        box-shadow: 0 0 10px #fff;
+      width: 30%;
+      height: 70%;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      box-shadow: 0 0 10px #fff;
     }
 
     input {
-        background-color: transparent;
-        border: none;
-        border-bottom: white 1px solid;
-        width: 60%;
-        font-size: 20px;
-        color: #fff;
-        margin: 10px 0px 10px 20px;
-        padding-left: 10px;
-
-
+      background-color: transparent;
+      border: none;
+      border-bottom: white 1px solid;
+      width: 60%;
+      font-size: 20px;
+      color: #fff;
+      margin: 10px 0px 10px 20px;
+      padding-left: 10px;
     }
 
     .but {
-        width: 120px;
-        background-color: transparent;
-        border: #fff 2px solid;
-        height: 40px;
-        border-radius: 5px;
-        font-weight: 600;
-        margin-top: 20px;
-        font-size: 16px;
+      width: 120px;
+      background-color: transparent;
+      border: #fff 2px solid;
+      height: 40px;
+      border-radius: 5px;
+      font-weight: 600;
+      margin-top: 20px;
+      font-size: 16px;
 
-        color: #fff;
-        margin: 20px 20px 0 20px;
-        text-align: center;
-
+      color: #fff;
+      margin: 20px 20px 0 20px;
+      text-align: center;
     }
 
     form {
-        width: 100%;
-        font-size: 20px;
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
+      width: 100%;
+      font-size: 20px;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
     }
 
     form div {
-        text-align: right;
-        width: 70%;
+      text-align: right;
+      width: 70%;
     }
-</style>
+  </style>
 </html>
