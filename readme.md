@@ -815,7 +815,11 @@ function get_Cookie(cookie_name) {
   
     心得体会：
     
+    ​	js动态添加dom元素
     
+    ​	js动态数据类型
+    
+    ​	2048报错,使用js断点调试解决
     
     
   
@@ -831,4 +835,4 @@ function get_Cookie(cookie_name) {
   
   - <u>饶黎明：</u>
   
-    ​		
+    ​		课程难度一般,进度稍快,课程内容较深,知识理解较慢,有点跟不上节奏.希望能讲解课后习题
