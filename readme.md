@@ -45,11 +45,14 @@
 | :------------- | :------------: | ------------------------------------------------------------ |
 | sessionStorage |       5        | Cookie辨别用户身份，进行[Session](https://baike.baidu.com/item/Session/479100)跟踪而储存在用户本地终端上的数据（经过加密），由用户[客户端](https://baike.baidu.com/item/客户端/101081)计算机暂时或永久保存的信息 |
 | Mysql          |       5        | 连接服务器端数据库                                           |
-| 函数式编程     |       3        | 函数作为参数                                                 |
+| 函数式编程     |       3        | 函数作为参数,纯函数                                          |
 | express框架    |       5        |                                                              |
 | RestAPI        |       4        | 采用Restful风格API                                           |
+| upload.js      |       3        | 封装头像到url地址                                            |
 
+## （三）github提交记录（仓库地址https://github.com/pzypzy777/JS_finalwork）
 
+![image-20220531175045843](readme.assets/image-20220531175045843.png)
 
 
 
@@ -825,7 +828,7 @@ function get_Cookie(cookie_name) {
     
     ​	2048报错,使用js断点调试解决
     
-    
+    ​	upload上传头像
   
 - #### **本课程建议**
   

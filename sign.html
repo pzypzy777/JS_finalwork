@@ -84,7 +84,7 @@ const onProgress = ({ progress }) => {
             <div> 账号<input type="text" id="name" /> </div>
             <div> 密码<input type="password" id="pass" /> </div>
             <div> 确认密码<input type="password" id="pass2" /> </div>
-            <div>头像</div><input type="file" name="image" onchange="onFileSelected(event)"><br>
+            <input type="file" name="image" onchange="onFileSelected(event)"><br>
             <img alt="" src="" name="srcImage" id="imgPreviewId" width="120px;" height="120px;">
         </form>
 
@@ -104,7 +104,7 @@ const onProgress = ({ progress }) => {
 
     .login {
         width: 30%;
-        height: 70%;
+        height: 90%;
         display: flex;
         flex-flow: column;
         justify-content: center;
