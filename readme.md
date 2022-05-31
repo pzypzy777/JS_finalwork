@@ -15,14 +15,18 @@
 <div style="margin-left:38%">- 学生姓名<u>潘振宇、饶黎明</u></div>
 <div style="margin-left:38%">- 实验指导教师:郭鸣</div>
 
+[TOC]
+
+
+
+
+
 ## [实验内容](https://js-sigcc.vercel.app/#/lab/proj.final?id=实验内容)
 
 1. 项目分工表格
 
 - 1人项目权重为1.0
 - 2人项目权重和为 1.9
-
-
 
 ------
 
@@ -41,7 +45,7 @@
 | :------------- | :------------: | ------------------------------------------------------------ |
 | sessionStorage |       5        | Cookie辨别用户身份，进行[Session](https://baike.baidu.com/item/Session/479100)跟踪而储存在用户本地终端上的数据（经过加密），由用户[客户端](https://baike.baidu.com/item/客户端/101081)计算机暂时或永久保存的信息 |
 | Mysql          |       5        | 连接服务器端数据库                                           |
-| 函数式编程     |       4        | 函数作为参数                                                 |
+| 函数式编程     |       3        | 函数作为参数                                                 |
 | express框架    |       5        |                                                              |
 | RestAPI        |       4        | 采用Restful风格API                                           |
 
@@ -91,7 +95,7 @@
 
 **增加用户登录注册、游戏记录、排行榜**
 
-
+![ ](readme.assets/image-20220531030655545.png)
 
 ### 2.用户登录&&注册
 
