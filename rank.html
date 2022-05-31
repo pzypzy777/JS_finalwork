@@ -7,6 +7,7 @@
     <title>排行榜</title>
     <script src="js/http.js"></script>
     <link rel="stylesheet" href="./myexpress/public/stylesheets/rank.css">
+    <script src="./js/upload.js"></script>
     <script></script>
   </head>
 
@@ -30,9 +31,16 @@
   <div class="container">
  <div class="header">
       <div>
+        <img alt="" src="" name="srcImage" id="imgPreviewId" width="80px;" height="80px;"  style="border-radius: 30px; margin:10px 20px;">
         <h3 id="user" style="text-align: center; margin-left: 40px;"></h3>
       </div>
       <div>
+        <div onclick="showChange()" class="but">修改头像</div>
+        <div id="change" style="display:none;">
+          <div>头像</div><input type="file" name="image" onchange="onFileSelected(event)"><br>
+            <img alt="" src="" name="srcImage" id="imgAfterId" width="120px;" height="120px;">
+            <div onclick="changeHead()" class="but">确认</div>
+        </div>
         <div onclick="loginout()" class="but">退出登录</div>
       </div>
     </div>
@@ -78,7 +86,9 @@
     var index = 0;
     var page = 6;
     var allpage = 0;
-
+function showChange(){
+  document.getElementById("change").style.display="block";
+}
     function loginout() {
       document.cookie = "";
       window.location.href = "./index.html";
@@ -97,7 +107,29 @@
         getRecord();
       }
     }
+    const upload = new Upload({ apiKey: "free" }); // Get from Upload.io
 
+// <input type="file" onchange="onFileSelected(event)" />
+const onFileSelected = async (event) => {
+  const [ file ]    = event.target.files;
+  const { fileUrl } = await upload.uploadFile({ file, onProgress });
+  console.log(`File uploaded: ${fileUrl}`);
+  document.getElementById("imgAfterId").src = fileUrl;
+  document.getElementById("imgAfterId").style.display = "block";
+}
+    function changeHead() {
+      let xmlhttp = new XMLHttpRequest();
+      let name = parseInt(getCookie("name"));
+      var img = document.getElementById("imgAfterId").src;
+      console.log(img)
+            var obj = {
+              id: name,
+              head: img,
+            };
+      xmlhttp.open("POST", myurl + "/user/"+ name +"/modifyhead/", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.send(JSON.stringify(obj));
+    }
     function getRank() {
       let xmlhttp = new XMLHttpRequest();
       let name = parseInt(getCookie("name"));
@@ -141,7 +173,10 @@
           }
         }
       };
-    }
+    }   
+    const onProgress = ({ progress }) => {
+  console.log(`File uploading: ${progress}% complete.`)
+}
 
     function getCookie(name) {
       var arr = document.cookie.split("; ");
@@ -173,7 +208,9 @@
 
           if (json.status == 200) {
             let us = document.getElementById("user");
-
+            let userimg = document.getElementById("imgPreviewId");
+            console.log(json.data);
+            userimg.src = json.data[0].head;
             us.innerHTML = json.data[0].name+" 玩家 , 你好 !";
           } else {
           }

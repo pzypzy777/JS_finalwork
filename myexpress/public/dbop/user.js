@@ -2,10 +2,9 @@ let { pool } = require("../dblink/database.js");
 module.exports = {
   add: function (user, callback) {
     // users表中增加user操作
-    let sqlparam = [user.name ? user.name : "", user.pass ? user.pass : ""];
-
+    let sqlparam = [user.name ? user.name : "", user.pass ? user.pass : "", user.imgurl ? user.imgurl : ""];
     pool.query(
-      "INSERT INTO user(name,password) VALUES (?,?);",
+      "INSERT INTO user(name,password,head) VALUES (?,?,?);",
       sqlparam,
       function (error, result) {
         if (error) throw error;
@@ -82,4 +81,12 @@ module.exports = {
       }
     );
   },
+  uploadhead: function (params, callback) {
+    //用户上传头像
+    pool.query("UPDATE user set head= ? where id = ?;",[params.head,params.id],
+    function (error, result) {
+      if (error) throw error;
+      callback(result);
+    });
+  }
 };

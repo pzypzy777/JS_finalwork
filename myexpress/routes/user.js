@@ -6,12 +6,13 @@ let {
   findByName,
   queryOne,
   update,
-  findUsernameByID
+  findUsernameByID,
+  uploadhead
 } = require("../public/dbop/user"); // 数据库操作
 
 
 
-router.post('/:id', function (req, res) {
+router.post('/:id', function (req, res, next) {
   let urlParam = req.body;
   findByName(urlParam, function (success) {
     if (success != null && success.id != urlParam.id) {
@@ -48,7 +49,6 @@ router.get('/find/:id', function (req, res) {
         data: success
       });
   })
-
 });
 
 
@@ -70,13 +70,26 @@ router.post('', function (req, res, next) {
   })
 });
 
+router.post('/:id/modifyhead',function (req, res, next) {
+  let urlParam = req.body;
+  console.log(urlParam)
+  uploadhead(urlParam, function (success){
+    if (success == null) {
+      res.json({
+        status: "400",
+        data: '上传失败'
+      });
+    } else {
+      res.json({
+        status: "200",
+        data: success
+      });
+    }
+  })
+})
 
-
-
-router.get('/:id', function (req, res, next) {
+router.get('/:id', function (req, res) {
   let urlParam = req.params.id;
-
-
   queryOne(urlParam, function (success) {
     if (success == null) {
       res.json({
@@ -106,8 +119,6 @@ router.post('/sign/new', function (req, res, next) {
         data: '账号已经被用过了哦'
       });
     } else {
-
-
       add(urlParam, function (success) {
         if (success == null) {
           res.json({
