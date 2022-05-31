@@ -91,7 +91,7 @@
 
 **增加用户登录注册、游戏记录、排行榜**
 
-![image-20220531030655545](readme.assets/image-20220531030655545.png)
+
 
 ### 2.用户登录&&注册
 
@@ -132,7 +132,7 @@ queryRank: function (id,callback) { //排行榜
   },
 ```
 
-
+![ ](readme.assets/image-20220531030655545.png)
 
 ### **5.服务器**
 
